@@ -7,6 +7,9 @@ function collect_pages(total_pages=0) {
   for (let page in [...Array(total_pages).keys()]) {
     pages.push(`manga/${page}.${manga_name}.com.jpg`);
   }
+
+  $('.page-number span.total').html(total_pages);
+
   return pages;
 }
 
@@ -50,6 +53,32 @@ function switch_style(new_style) {
   page.addClass(new_style);
 }
 
+function entrarFullScreen(){
+  if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  }
+}
+
+function sairFullScreen(){
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  } else if (document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
 function move_page(direction) {
   if (direction == 'right') {
     if (current_page_number < total_pages) {
@@ -64,6 +93,7 @@ function move_page(direction) {
       current_page_number--;
     }
   }
+  $('.page-number span.current').html(current_page_number);
 }
 
 $(function() {
@@ -72,6 +102,19 @@ $(function() {
   for (let [index, page] of pages.entries()) {
     show_image(id=index, src=page);
   }
+
+  // Fullscreen
+  let isFullscreen = false;
+
+  $(".fullscreen").click(function() {
+    if (isFullscreen) {
+      isFullscreen = false;
+      sairFullScreen();
+    } else {
+      isFullscreen = true;
+      entrarFullScreen();
+    }
+  });
 
   // Size Page
   $('#pageSize').change(function() {
@@ -99,13 +142,15 @@ $(function() {
   });
 
   // Scroll Button
-  let btn = $('#scrollTop');
+  let btn = $('#scroll-top');
 
   $(window).scroll(function() {
-    if ($(this).scrollTop() > 300) {
-      btn.show().fadeIn();
-    } else {
-      btn.fadeOut().hide();
+    if (get_current_style() == 'vertical-style') {
+      if ($(this).scrollTop() > 300) {
+        btn.show().fadeIn();
+      } else {
+        btn.fadeOut().hide();
+      }
     }
   });
 

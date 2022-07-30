@@ -1,9 +1,9 @@
 # Manga Reader
-A simples and useful manga reader for Node.js
+A simple and useful manga reader in JS using only Jquery
 
 ### How Test?
 
-You can test by yourself just click [here](https://dfop02.github.io/manga-reader/example/window.html).
+You can test by yourself just click [here](https://dfop02.github.io/manga-reader/window.html).
 
 ### Why?
 
@@ -12,8 +12,8 @@ This code was made based on my own experiences reading mangas, absorving the bes
 ### TO-DO
 
 - Add Double Page Style
-- Add Current Page/Page Select Button when Page Style
-- Add Selector at botton when Page Style
+- Add Page Selector at botton when Page Style
+- Add fixed header (show when hover mouse) when Vertical Style
 
 ### Authors
 

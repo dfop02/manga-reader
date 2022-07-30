@@ -122,6 +122,48 @@
   margin: 0 10px;
 }
 
+/* Page Number */
+
+.page-number {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  vertical-align: middle;
+  justify-content: center;
+  background-color: #04AA6D;
+  height: 40px;
+  font-size: 16px;
+  margin-left: 16px;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+}
+
+.page-number span.current {
+  padding-right: 5px;
+}
+
+.page-number span.total {
+  padding: 0 10px 0 5px;
+}
+
+/* Fullscreen */
+
+.fullscreen {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  vertical-align: middle;
+  justify-content: center;
+  background-color: #04AA6D;
+  height: 40px;
+  font-size: 16px;
+  margin-left: 16px;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+}
+
 /* PREVIOUS AND NEXT BUTTONS */
 
 .previous-page-btn, .next-page-btn {
