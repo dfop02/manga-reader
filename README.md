@@ -3,7 +3,7 @@ A simple and useful manga reader in JS using only Jquery
 
 ### How Test?
 
-You can test by yourself just click [here](https://dfop02.github.io/manga-reader/window.html).
+You can test by yourself soon.
 
 ### Why?
 
