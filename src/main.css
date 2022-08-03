@@ -29,6 +29,11 @@
   flex-direction: column;
 }
 
+.double-style {
+  flex-direction: row-reverse;
+  overflow: auto;
+}
+
 .controls {
   display: flex;
   align-items: center;
@@ -47,6 +52,14 @@
   font-size: 16px;
   border: none;
   border-radius: 10px;
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: end;
+}
+
+.style-btn span {
+  margin-right: 5px;
 }
 
 .read-style {
@@ -96,10 +109,11 @@
 
 #pageSize {
   text-align: center;
-  width: 50%;
+  width: 40%;
   height: 40px;
   font-size: 16px;
   border-radius: 10px 0 0 10px;
+  padding-right: 10px;
 }
 
 #pageSize::-webkit-inner-spin-button,
@@ -110,8 +124,8 @@
 
 .page-size span {
   position: absolute;
-  right: 60%;
-  top: 25%;
+  right: 66%;
+  top: 26%;
   font-size: 16px;
 }
 
@@ -119,13 +133,17 @@
   position: relative;
   color: white;
   font-size: 16px;
-  margin: 0 10px;
+}
+
+.page-size label i {
+  position: relative;
+  top: 6px;
 }
 
 /* Page Number */
 
 .page-number {
-  display: flex;
+  display: none;
   align-items: center;
   align-content: center;
   vertical-align: middle;
@@ -139,12 +157,21 @@
   color: white;
 }
 
+.page-number[style*='display: block']{
+  display: flex !important;
+}
+
 .page-number span.current {
   padding-right: 5px;
+  margin-left: 5px;
 }
 
 .page-number span.total {
   padding: 0 10px 0 5px;
+}
+
+.page-number span.material-icons {
+  margin-right: 5px;
 }
 
 /* Fullscreen */
@@ -162,6 +189,7 @@
   border-radius: 10px;
   padding: 0 10px;
   color: white;
+  cursor: pointer;
 }
 
 /* PREVIOUS AND NEXT BUTTONS */

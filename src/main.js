@@ -1,6 +1,7 @@
 let current_page_number = 0;
-let total_pages = 68;
-let manga_name = 'rawkuma';
+let current_size        = 60;
+let total_pages         = 67;
+let manga_name          = 'rawkuma';
 
 function collect_pages(total_pages=0) {
   let pages = [];
@@ -13,7 +14,7 @@ function collect_pages(total_pages=0) {
   return pages;
 }
 
-function show_image(id='', src='', width='60') {
+function show_image(id='', src='', width=current_size) {
   $('.page').append(`<img id="${id}" width="${width}%" src="${src}"/>`)
 }
 
@@ -21,10 +22,24 @@ function update_page_size(new_size) {
   $('.page img').each(function(){
     $(this).attr('width', `${new_size}%`);
   });
+
+  if ($('#pageSize').val() != new_size) {
+    $('#pageSize').val(new_size)
+  }
 }
 
 function get_current_style() {
   return $('.page').attr('class').split(' ')[1];
+}
+
+function toggle_page_buttons(hide) {
+  if (hide) {
+    $('.previous-page-btn, .next-page-btn').fadeOut().hide();
+    $('.page-number').fadeOut().hide();
+  } else {
+    $('.previous-page-btn, .next-page-btn').show().fadeIn();
+    $('.page-number').show().fadeIn();
+  }
 }
 
 function switch_style(new_style) {
@@ -33,17 +48,29 @@ function switch_style(new_style) {
 
   if (current_style == new_style) return;
 
-  if (current_style == 'page-style') {
-    $('.previous-page-btn, .next-page-btn').fadeOut().hide();
+  if (['page-style', 'double-style'].includes(current_style)) {
+    if (!['page-style', 'double-style'].includes(new_style)) {
+      toggle_page_buttons(true)
+      update_page_size(current_size)
+    }
     $('.page img').each(function() {
       $(this).show();
     });
   }
 
   if (new_style == 'page-style') {
-    $('.previous-page-btn, .next-page-btn').show().fadeIn();;
+    toggle_page_buttons(false)
+    update_page_size(current_size)
     $('.page img').each(function() {
       if (parseInt(this.id) != current_page_number) {
+        $(this).hide();
+      };
+    });
+  } else if (new_style == 'double-style') {
+    toggle_page_buttons(false)
+    update_page_size(50)
+    $('.page img').each(function() {
+      if (parseInt(this.id) != current_page_number && parseInt(this.id) != current_page_number+1) {
         $(this).hide();
       };
     });
@@ -53,7 +80,7 @@ function switch_style(new_style) {
   page.addClass(new_style);
 }
 
-function entrarFullScreen(){
+function joinFullScreen(){
   if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
     if (document.documentElement.requestFullscreen) {
       document.documentElement.requestFullscreen();
@@ -67,7 +94,7 @@ function entrarFullScreen(){
   }
 }
 
-function sairFullScreen(){
+function exitFullScreen(){
   if (document.exitFullscreen) {
     document.exitFullscreen();
   } else if (document.msExitFullscreen) {
@@ -80,17 +107,37 @@ function sairFullScreen(){
 }
 
 function move_page(direction) {
+  let current_style = get_current_style();
+
   if (direction == 'right') {
     if (current_page_number < total_pages) {
-      $(`.page img#${current_page_number}`).hide();
-      $(`.page img#${current_page_number+1}`).show();
-      current_page_number++;
+      if (current_style == 'double-style') {
+        $(`.page img#${current_page_number}`).hide();
+        $(`.page img#${current_page_number+1}`).hide();
+        $(`.page img#${current_page_number+2}`).show();
+        $(`.page img#${current_page_number+3}`).show();
+        current_page_number += 2;
+      } else {
+        $(`.page img#${current_page_number}`).hide();
+        $(`.page img#${current_page_number+1}`).show();
+        current_page_number++;
+      }
     }
   } else {
-    if (current_page_number > 0) {
-      $(`.page img#${current_page_number}`).hide();
-      $(`.page img#${current_page_number-1}`).show();
-      current_page_number--;
+    if (current_style == 'double-style') {
+      if (current_page_number > 1) {
+        $(`.page img#${current_page_number}`).hide();
+        $(`.page img#${current_page_number-1}`).hide();
+        $(`.page img#${current_page_number-2}`).show();
+        $(`.page img#${current_page_number-3}`).show();
+        current_page_number -= 2;
+      }
+    } else {
+      if (current_page_number > 0) {
+        $(`.page img#${current_page_number}`).hide();
+        $(`.page img#${current_page_number-1}`).show();
+        current_page_number--;
+      }
     }
   }
   $('.page-number span.current').html(current_page_number);
@@ -109,10 +156,10 @@ $(function() {
   $(".fullscreen").click(function() {
     if (isFullscreen) {
       isFullscreen = false;
-      sairFullScreen();
+      exitFullScreen();
     } else {
       isFullscreen = true;
-      entrarFullScreen();
+      joinFullScreen();
     }
   });
 
@@ -131,7 +178,7 @@ $(function() {
   })
 
   $(this).keydown(function(e) {
-    if (get_current_style() == 'page-style') {
+    if (['page-style', 'double-style'].includes(get_current_style())) {
       if (e.keyCode == 37) {
         move_page('left');
       }
