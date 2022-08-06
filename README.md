@@ -3,7 +3,8 @@ A simple and useful manga reader in JS.
 
 ### How Test?
 
-You can test by yourself soon.
+I'll simplify soon for a easiest way to test... but for now here is how you can test by this way:
+Download any manga and add on manga folder, get the default name of image, they need be the same only diff by page number, then edit line 10 on main.js for correctly match and test it!
 
 ### Why?
 
@@ -11,9 +12,7 @@ This code was made based on my own experiences reading mangas, absorving the bes
 
 ### TO-DO
 
-- Be able to select any page at any moment on page/double styles
 - Add Page Selector at botton when Page Style
-- Add fixed header (show when hover mouse) when Vertical Style
 
 ### Authors
 

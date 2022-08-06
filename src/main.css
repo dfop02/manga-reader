@@ -1,6 +1,7 @@
 .manga-box {
   width: 100%;
   margin: 16px 0;
+  font-family: arial;
 }
 
 .manga-box h1 {
@@ -15,8 +16,21 @@
   vertical-align: middle;
 }
 
+/* Styles */
+
 .vertical-style {
   flex-direction: column;
+}
+
+.double-vertical-style {
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  overflow: auto;
+  justify-content: center;
+}
+
+.double-vertical-style > img {
+  flex: 50%;
 }
 
 .horizontal-style {
@@ -25,14 +39,17 @@
   white-space: nowrap;
 }
 
-.page-style {
+.one-page-style {
   flex-direction: column;
 }
 
-.double-style {
+.double-page-style {
   flex-direction: row-reverse;
   overflow: auto;
+  justify-content: center;
 }
+
+/* Controls */
 
 .controls {
   display: flex;
@@ -40,6 +57,29 @@
   align-content: center;
   vertical-align: middle;
   justify-content: center;
+}
+
+.fixed {
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  visibility: visible;
+  opacity: 0;
+  -webkit-transition: opacity 2s ease-in;
+  -moz-transition: opacity 2s ease-in;
+  -o-transition: opacity 2s ease-in;
+  -ms-transition: opacity 2s ease-in;
+  transition: opacity 2s ease-in;
+}
+
+.fixed:hover {
+  visibility: visible;
+  opacity: 1.0;
+  -webkit-transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
+  -ms-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
 }
 
 /* Read Style */
@@ -101,7 +141,7 @@
 .page-size {
   background-color: #04AA6D;
   position: relative;
-  width: 180px;
+  width: 190px;
   font-size: 16px;
   margin-left: 16px;
   border-radius: 10px;
@@ -114,6 +154,7 @@
   font-size: 16px;
   border-radius: 10px 0 0 10px;
   padding-right: 10px;
+  border: 2px solid #04AA6D;
 }
 
 #pageSize::-webkit-inner-spin-button,
@@ -161,9 +202,23 @@
   display: flex !important;
 }
 
-.page-number span.current {
-  padding-right: 5px;
+.page-number input.current {
+  background-color: #04AA6D;
+  border: none;
+  color: white;
+  font-size: 16px;
+  width: 30px;
   margin-left: 5px;
+}
+
+#currentPage::-webkit-inner-spin-button,
+#currentPage::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#currentPage:focus-visible {
+  outline: none;
 }
 
 .page-number span.total {
@@ -190,6 +245,10 @@
   padding: 0 10px;
   color: white;
   cursor: pointer;
+}
+
+.fullscreen span.exit {
+  display: none;
 }
 
 /* PREVIOUS AND NEXT BUTTONS */

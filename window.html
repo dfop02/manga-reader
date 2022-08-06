@@ -19,9 +19,10 @@
                     </button>
                     <div class="style-content">
                         <a href="#" onclick="switch_style('vertical-style')">Long Strip</a>
+                        <a href="#" onclick="switch_style('double-vertical-style')">Double Long Strip</a>
                         <a href="#" onclick="switch_style('horizontal-style')">Original</a>
-                        <a href="#" onclick="switch_style('double-style')">Double Page</a>
-                        <a href="#" onclick="switch_style('page-style')">Page by Page</a>
+                        <a href="#" onclick="switch_style('one-page-style')">Page by Page</a>
+                        <a href="#" onclick="switch_style('double-page-style')">Double Page</a>
                     </div>
                 </div>
                 <div class="page-size" title="Page Size">
@@ -35,12 +36,13 @@
                 <div class="page-number" title="Page Number">
                     <span class="material-icons">auto_stories</span>
                     Page
-                    <span class="current">0</span>
+                    <input type="number" min="0" max="999" name="current-page" id="currentPage" class="current" value="0">
                     /
                     <span class="total">0</span>
                 </div>
                 <div class="fullscreen">
-                    <span class="material-icons">fullscreen</span>
+                    <span class="material-icons join">fullscreen</span>
+                    <span class="material-icons exit">fullscreen_exit</span>
                     Fullscreen
                 </div>
                 <div class="previous-page-btn">&#8249;</div>

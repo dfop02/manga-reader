@@ -1,7 +1,8 @@
 let current_page_number = 0;
-let current_size        = 60;
-let total_pages         = 67;
-let manga_name          = 'rawkuma';
+let current_size = 60;
+let current_style = 'vertical-style';
+let total_pages = 67;
+let manga_name = 'rawkuma';
 
 function collect_pages(total_pages=0) {
   let pages = [];
@@ -28,56 +29,68 @@ function update_page_size(new_size) {
   }
 }
 
-function get_current_style() {
-  return $('.page').attr('class').split(' ')[1];
+function show_pages_by_style(style) {
+  let pages = $('.page img');
+
+  if (style == 'one-page-style') {
+    pages.each(function() {
+      console.log(`id: ${parseInt(this.id)} | current_page_number: ${current_page_number}`)
+      if (parseInt(this.id) != current_page_number) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    });
+  } else if (style == 'double-page-style') {
+    pages.each(function() {
+      if (parseInt(this.id) != current_page_number && parseInt(this.id) != current_page_number+1) {
+        $(this).hide();
+      } else {
+        $(this).show();
+      }
+    });
+  } else {
+    pages.each(function() {
+      $(this).show();
+    });
+  }
 }
 
-function toggle_page_buttons(hide) {
+function toggle_page_buttons(hide=true) {
   if (hide) {
-    $('.previous-page-btn, .next-page-btn').fadeOut().hide();
-    $('.page-number').fadeOut().hide();
+    $('.previous-page-btn, .next-page-btn').hide();
+    $('.page-number').hide();
   } else {
-    $('.previous-page-btn, .next-page-btn').show().fadeIn();
-    $('.page-number').show().fadeIn();
+    $('.previous-page-btn, .next-page-btn').fadeIn();
+    $('.page-number').fadeIn();
   }
 }
 
 function switch_style(new_style) {
-  let page          = $('.page');
-  let current_style = get_current_style();
+  let page = $('.page');
+  let page_styles = ['one-page-style', 'double-page-style'];
 
   if (current_style == new_style) return;
 
-  if (['page-style', 'double-style'].includes(current_style)) {
-    if (!['page-style', 'double-style'].includes(new_style)) {
-      toggle_page_buttons(true)
-      update_page_size(current_size)
-    }
-    $('.page img').each(function() {
-      $(this).show();
-    });
+  if (page_styles.includes(current_style) && !page_styles.includes(new_style)) {
+    toggle_page_buttons(hide=true);
+    update_page_size(current_size);
   }
 
-  if (new_style == 'page-style') {
-    toggle_page_buttons(false)
-    update_page_size(current_size)
-    $('.page img').each(function() {
-      if (parseInt(this.id) != current_page_number) {
-        $(this).hide();
-      };
-    });
-  } else if (new_style == 'double-style') {
-    toggle_page_buttons(false)
-    update_page_size(50)
-    $('.page img').each(function() {
-      if (parseInt(this.id) != current_page_number && parseInt(this.id) != current_page_number+1) {
-        $(this).hide();
-      };
-    });
+  if (new_style == 'one-page-style') {
+    toggle_page_buttons(hide=false);
+    update_page_size(current_size);
+  } else if (new_style == 'double-page-style') {
+    toggle_page_buttons(hide=false);
+    update_page_size(50);
+  } else if (new_style == 'double-vertical-style') {
+    update_page_size(50);
   }
 
+  show_pages_by_style(new_style);
   page.removeClass(current_style);
   page.addClass(new_style);
+  current_style = new_style;
 }
 
 function joinFullScreen(){
@@ -107,40 +120,27 @@ function exitFullScreen(){
 }
 
 function move_page(direction) {
-  let current_style = get_current_style();
-
   if (direction == 'right') {
     if (current_page_number < total_pages) {
-      if (current_style == 'double-style') {
-        $(`.page img#${current_page_number}`).hide();
-        $(`.page img#${current_page_number+1}`).hide();
-        $(`.page img#${current_page_number+2}`).show();
-        $(`.page img#${current_page_number+3}`).show();
+      if (current_style == 'double-page-style') {
         current_page_number += 2;
       } else {
-        $(`.page img#${current_page_number}`).hide();
-        $(`.page img#${current_page_number+1}`).show();
         current_page_number++;
       }
     }
   } else {
-    if (current_style == 'double-style') {
+    if (current_style == 'double-page-style') {
       if (current_page_number > 1) {
-        $(`.page img#${current_page_number}`).hide();
-        $(`.page img#${current_page_number-1}`).hide();
-        $(`.page img#${current_page_number-2}`).show();
-        $(`.page img#${current_page_number-3}`).show();
         current_page_number -= 2;
       }
     } else {
       if (current_page_number > 0) {
-        $(`.page img#${current_page_number}`).hide();
-        $(`.page img#${current_page_number-1}`).show();
         current_page_number--;
       }
     }
   }
-  $('.page-number span.current').html(current_page_number);
+  $('.page-number input.current').val(current_page_number);
+  show_pages_by_style(current_style);
 }
 
 $(function() {
@@ -153,7 +153,7 @@ $(function() {
   // Fullscreen
   let isFullscreen = false;
 
-  $(".fullscreen").click(function() {
+  $('.fullscreen').click(function() {
     if (isFullscreen) {
       isFullscreen = false;
       exitFullScreen();
@@ -161,11 +161,18 @@ $(function() {
       isFullscreen = true;
       joinFullScreen();
     }
+    $(this).find('span').toggle();
   });
 
   // Size Page
   $('#pageSize').change(function() {
     update_page_size($(this).val());
+  });
+
+  // Page Number
+  $('#currentPage').change(function() {
+    current_page_number = parseInt($(this).val());
+    show_pages_by_style(current_style);
   });
 
   // Previous and Next Buttons
@@ -178,7 +185,7 @@ $(function() {
   })
 
   $(this).keydown(function(e) {
-    if (['page-style', 'double-style'].includes(get_current_style())) {
+    if (['one-page-style', 'double-page-style'].includes(current_style)) {
       if (e.keyCode == 37) {
         move_page('left');
       }
@@ -188,15 +195,25 @@ $(function() {
     }
   });
 
-  // Scroll Button
+  // Scroll Button and Header
   let btn = $('#scroll-top');
 
   $(window).scroll(function() {
-    if (get_current_style() == 'vertical-style') {
-      if ($(this).scrollTop() > 300) {
-        btn.show().fadeIn();
+    let scrollTop = $(this).scrollTop();
+    let controls = $('.controls');
+
+    if (['vertical-style', 'double-vertical-style'].includes(current_style)) {
+      if (scrollTop > 300) {
+        btn.fadeIn(1000);
+        controls.addClass('fixed');
       } else {
-        btn.fadeOut().hide();
+        btn.fadeOut(1000);
+        controls.removeClass('fixed');
+      }
+    } else {
+      if (controls.hasClass('fixed')) {
+        btn.fadeOut(1000);
+        controls.removeClass('fixed');
       }
     }
   });
