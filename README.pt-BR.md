@@ -9,7 +9,7 @@ Você pode testar [aqui](https://dfop02.github.io/manga-reader/window.html) com 
 
 Se você preferir um teste mais completo, sinta-se livre para baixar o projeto e usar qualquer manga você quiser, apenas siga as instruções abaixo:
 Baixe qualquer manga e adicione a pasta manga dentro do manga-reader, pegue o nome das imagens, elas precisam ser todas iguais diferenciando apenas o numero da página: 1.filename.jpg, 2.filename.jpg, etc.
-Porfim, no arquivo main.js, edite a linha 7 com o total de páginas e a linha 14 com o nome correto dos arquivos, abra o window.html no navegador e agora só testar!
+Porfim, no arquivo main.js, edite a linha 7 com o total de páginas, linha 9 com o nome correto dos arquivos e 10 com a fonte, abra o window.html no navegador e agora só testar!
 
 ### Por que?
 

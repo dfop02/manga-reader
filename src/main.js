@@ -7,13 +7,14 @@ let current_style = 'vertical-style';
 let total_pages = 10;
 let manga_name = 'Manga Reader Example';
 let filenames = 'example.jpg';
+let source = 'https://dfop02.github.io/manga-reader'
 
 function range(size, startAt = 0) {
   return [...Array(size).keys()].map(i => i + startAt);
 }
 
 function collect_pages(total_pages = 0) {
-  return range(total_pages).map(page => `manga/${page}.${filenames}`);
+  return range(total_pages).map(page => `${source}/${page}.${filenames}`);
 }
 
 function show_image(id = '', src = '', width = current_size) {
