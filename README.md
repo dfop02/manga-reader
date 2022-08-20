@@ -5,7 +5,9 @@ A simple and useful manga reader in JS.
 
 ### How Test?
 
-I'll simplify soon for a easiest way to test... but for now here is how you can test by this way:
+You can test [here](https://dfop02.github.io/manga-reader/window.html) with some example pages.
+
+If you prefer a more complete test, please feel free to download the project and any manga you prefer, just follow the basic instructions bellow:
 Download any manga and add on manga folder, get the default name of image, they all need be the same only diff by page number: 1.filename.jpg, 2.filename.jps, etc.
 Then on main.js, edit line 7 with the total pages and 9 with the correct filename, open window.html on navegator and test it!
 
