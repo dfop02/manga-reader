@@ -15,7 +15,7 @@
                 <div class="read-style" title="Read Style">
                     <button class="style-btn">
                         <span class="material-icons">menu_book</span>
-                        Read Style
+                        <p class="name-style">Read Style</p>
                     </button>
                     <div class="style-content">
                         <a href="#" onclick="switch_style('vertical-style')">Long Strip</a>
@@ -30,12 +30,12 @@
                     <span>%</span>
                     <label for="size">
                         <i class="material-icons">find_in_page</i>
-                        Page Size
+                        <p class="size-title">Page Size</p>
                     </label>
                 </div>
                 <div class="page-number" title="Page Number">
                     <span class="material-icons">auto_stories</span>
-                    Page
+                    <p class="page-number-title">Page</p>
                     <input type="number" min="0" max="999" name="current-page" id="currentPage" class="current" value="0">
                     /
                     <span class="total">0</span>
@@ -43,14 +43,20 @@
                 <div class="fullscreen">
                     <span class="material-icons join">fullscreen</span>
                     <span class="material-icons exit">fullscreen_exit</span>
-                    Fullscreen
+                    <p class="fullscreen-title">Fullscreen</p>
+                </div>
+                <div class="switch-mode">
+                    <span class="material-icons light-mode">light_mode</span>
+                    <span class="material-icons dark-mode">dark_mode</span>
+                    <p class="name-mode">Dark Mode</p>
                 </div>
                 <div class="previous-page-btn">&#8249;</div>
                 <div class="next-page-btn">&#8250;</div>
             </div>
-            <h1>Exemplo do manga-reader</h1>
+            <h1 class="manga-title"></h1>
             <div class="page vertical-style"></div>
         </div>
-        <button id="scroll-top" title="Go to top"><img src="src/up-arrow.svg" alt="Up Arrow"/></div>
+        <div class="carousel-pages"></div>
+        <button id="scroll-top" title="Go to top"><span class="material-icons">arrow_upward</span></button>
     </body>
 </html>

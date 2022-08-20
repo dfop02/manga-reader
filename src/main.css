@@ -1,7 +1,19 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
 .manga-box {
   width: 100%;
-  margin: 16px 0;
+  padding-top: 16px;
   font-family: arial;
+  background-color: white;
+  -webkit-transition: background-color 0.3s ease-in;
+  -moz-transition: background-color 0.3s ease-in;
+  -o-transition: background-color 0.3s ease-in;
+  -ms-transition: background-color 0.3s ease-in;
+  transition: background-color 0.3s ease-in;
 }
 
 .manga-box h1 {
@@ -16,10 +28,33 @@
   vertical-align: middle;
 }
 
+/* Dark Mode */
+
+html.dark-mode {
+  background-color: black;
+}
+
+.manga-box.dark-mode {
+  background-color: black;
+  -webkit-transition: background-color 0.3s ease-out;
+  -moz-transition: background-color 0.3s ease-out;
+  -o-transition: background-color 0.3s ease-out;
+  -ms-transition: background-color 0.3s ease-out;
+  transition: background-color 0.3s ease-out;
+}
+
+.manga-box.dark-mode h1.manga-title {
+  color: white;
+}
+
 /* Styles */
 
 .vertical-style {
   flex-direction: column;
+}
+
+.vertical-style > img {
+  padding: 10px 0;
 }
 
 .double-vertical-style {
@@ -31,6 +66,7 @@
 
 .double-vertical-style > img {
   flex: 50%;
+  padding: 10px 0;
 }
 
 .horizontal-style {
@@ -59,7 +95,7 @@
   justify-content: center;
 }
 
-.fixed {
+.controls.fixed {
   position: fixed;
   left: 50%;
   transform: translate(-50%, 0);
@@ -72,7 +108,7 @@
   transition: opacity 2s ease-in;
 }
 
-.fixed:hover {
+.controls.fixed:hover {
   visibility: visible;
   opacity: 1.0;
   -webkit-transition: opacity 0.5s ease-out;
@@ -107,6 +143,13 @@
   display: inline-block;
 }
 
+.name-style {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
 .style-content {
   display: none;
   position: absolute;
@@ -134,6 +177,7 @@
 
 .read-style:hover .style-btn {
   background-color: #3e8e41;
+  border-radius: 10px 10px 0 0;
 }
 
 /* PAGE SIZE */
@@ -181,6 +225,13 @@
   top: 6px;
 }
 
+.size-title {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
 /* Page Number */
 
 .page-number {
@@ -209,6 +260,7 @@
   font-size: 16px;
   width: 30px;
   margin-left: 5px;
+  text-align: center;
 }
 
 #currentPage::-webkit-inner-spin-button,
@@ -227,6 +279,13 @@
 
 .page-number span.material-icons {
   margin-right: 5px;
+}
+
+.page-number-title {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
 }
 
 /* Fullscreen */
@@ -249,6 +308,48 @@
 
 .fullscreen span.exit {
   display: none;
+}
+
+.fullscreen-title {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+/* Switch Mode */
+
+.switch-mode {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  vertical-align: middle;
+  justify-content: center;
+  background-color: #04AA6D;
+  height: 40px;
+  font-size: 16px;
+  margin-left: 16px;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.switch-mode span.light-mode {
+  display: none;
+  margin-right: 5px;
+}
+
+.switch-mode span.dark-mode {
+  display: block;
+  margin-right: 5px;
+}
+
+.name-mode {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
 }
 
 /* PREVIOUS AND NEXT BUTTONS */
@@ -279,6 +380,76 @@
   transform: translateY(-50%);
 }
 
+/* Carousel Pages */
+
+.carousel-pages {
+  display: flex;
+  overflow-x: auto;
+  position: fixed;
+  width: 90%;
+  height: 40px;
+  z-index: 99;
+  padding: 15px;
+  opacity: 1;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.carousel-pages.active {
+  display: flex;
+  visibility: visible;
+  bottom: 12px;
+  opacity: 0;
+  -webkit-transition: opacity 2s ease-in;
+  -moz-transition: opacity 2s ease-in;
+  -o-transition: opacity 2s ease-in;
+  -ms-transition: opacity 2s ease-in;
+  transition: opacity 2s ease-in;
+}
+
+.carousel-pages.active:hover {
+  visibility: visible;
+  opacity: 1.0;
+  -webkit-transition: opacity 0.5s ease-out;
+  -moz-transition: opacity 0.5s ease-out;
+  -o-transition: opacity 0.5s ease-out;
+  -ms-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
+}
+
+.carousel-pages span {
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 40px;
+  background-color: #3e8e41;
+  color: white;
+  opacity: 0.8;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+  flex: none;
+  -webkit-transition: background-color 2s ease-in;
+  -moz-transition: background-color 2s ease-in;
+  -o-transition: background-color 2s ease-in;
+  -ms-transition: background-color 2s ease-in;
+  transition: background-color 2s ease-in;
+}
+
+.carousel-pages span.read {
+  background-color: gray;
+  color: white;
+  opacity: 0.8;
+  -webkit-transition: background-color 0.5s ease-out;
+  -moz-transition: background-color 0.5s ease-out;
+  -o-transition: background-color 0.5s ease-out;
+  -ms-transition: background-color 0.5s ease-out;
+  transition: background-color 0.5s ease-out;
+}
+
 /* SCROLL BUTTON */
 
 #scroll-top {
@@ -301,8 +472,84 @@
   width:  20px;
 }
 
-html, body {
-  width: 100%;
-  height: 98%;
-  margin: 0;
+/* Mobile (Down) */
+@media only screen and (max-width: 1000px) {
+  .page-size {
+    width: 200px;
+  }
+
+  .previous-page-btn, .next-page-btn {
+    display: none !important;
+  }
+
+  .carousel-pages.active {
+    width: 87%;
+    margin-left: 7px;
+  }
+}
+
+/* Mobile (Up) */
+@media only screen and (max-width: 600px) {
+  .name-style, .size-title, .page-number-title, .fullscreen-title, .name-mode {
+    display: none;
+  }
+
+  .read-style button.style-btn span, .switch-mode span, .page-number span {
+    margin: 0 !important;
+  }
+
+  .page-size {
+    display: none;
+    width: 100px;
+  }
+
+  .page-size span {
+    right: 46%;
+  }
+
+  .page-number span.current {
+    text-align: center;
+  }
+
+  .page-number span.total {
+    padding: 0 0 0 2px;
+  }
+
+  #pageSize {
+    width: 60%;
+    padding-right: 14px;
+  }
+
+  .controls.fixed {
+    opacity: 1.0;
+  }
+
+  .previous-page-btn, .next-page-btn {
+    display: none !important;
+  }
+
+  .double-vertical-style > img,
+  .double-page-style > img {
+    width: 50%;
+  }
+
+  .vertical-style > img,
+  .horizontal-style > img,
+  .one-page-style > img {
+    width: 100%;
+  }
+
+  .carousel-pages {
+    opacity: 0;
+  }
+
+  .carousel-pages.active {
+    width: 72%;
+    margin-left: 7px;
+    opacity: 1.0;
+  }
+
+  #scroll-top {
+    right: 10px;
+  }
 }
