@@ -1,7 +1,7 @@
 # Manga Reader
 A simple and useful manga reader in JS.
 
-[English](https://github.com/dfop02/manga-reader/README.md) | [Português BR](https://github.com/dfop02/manga-reader/README.pt-BR.md)
+[English](https://github.com/dfop02/manga-reader/blob/main/README.pt-BR.md) | [Português BR](https://github.com/dfop02/manga-reader/blob/main/README.pt-BR.md)
 
 ### How Test?
 
