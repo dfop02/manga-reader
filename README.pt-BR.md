@@ -8,8 +8,15 @@ Um simples e eficiente leitor de manga feito em JS
 Você pode testar [aqui](https://dfop02.github.io/manga-reader/window.html) com algumas páginas de exemplo.
 
 Se você preferir um teste mais completo, sinta-se livre para baixar o projeto e usar qualquer manga você quiser, apenas siga as instruções abaixo:
-Baixe qualquer manga e adicione a pasta manga dentro do manga-reader, pegue o nome das imagens, elas precisam ser todas iguais diferenciando apenas o numero da página: 1.filename.jpg, 2.filename.jpg, etc.
-Porfim, no arquivo main.js, edite a linha 7 com o total de páginas, linha 9 com o nome correto dos arquivos e 10 com a fonte, abra o window.html no navegador e agora só testar!
+
+
+1. Baixe qualquer manga e adicione a pasta `manga` dentro do manga-reader
+2. Vá no arquivo `src/main.js`, edite as configurações do usuário, da linha 7 a 10.
+    - total_pages - Total de páginas que o capítulo tem
+    - manga_name - Nome do Manga
+    - filename - Nome dos arquivos (precisam ser todos iguais, mudando apenas o numero da página, ex: 1.filename.jpg, 2.filename.jpg, etc.)
+    - source - O diretorio onde está (recomendo usar o padrão `manga` dentro do projeto)
+3. Abra o arquivo window.html no navegador e agora só usar!
 
 ### Por que?
 
@@ -17,8 +24,8 @@ Esse código foi feito baseado nas minhas próprias experiências e a dos meus a
 
 ### TO-DO
 
-- Construir a versão mobile
 - Ser capaz de ler PDF também
+- Add locale
 
 ### Autores
 

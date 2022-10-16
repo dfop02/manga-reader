@@ -8,6 +8,7 @@ let total_pages = 10;
 let manga_name = 'Manga Reader Example';
 let filenames = 'example.jpg';
 let source = 'manga'
+// End Settings
 
 function range(size, startAt = 0) {
   return [...Array(size).keys()].map(i => i + startAt);
@@ -144,7 +145,7 @@ function switch_mode(isDarkMode) {
 
 function move_page(direction) {
   if (direction == 'right') {
-    if (current_page_number >= total_pages) return;
+    if (current_page_number >= total_pages-1) return;
 
     if (current_style == 'double-page-style') {
       mark_page_as_read([current_page_number, current_page_number+1], false);
@@ -168,6 +169,14 @@ function move_page(direction) {
   show_pages_by_style(current_style);
 }
 
+function invalidPage(page) {
+  if (page < 0 || page >= total_pages) {
+    alert('Invalid Page number');
+    return true
+  }
+  return false
+}
+
 $(function() {
   const page_styles = ['one-page-style', 'double-page-style'];
   const vertical_styles = ['vertical-style', 'double-vertical-style'];
@@ -181,7 +190,7 @@ $(function() {
   }
 
   $('.manga-title').html(manga_name);
-  $('.page-number span.total').html(total_pages);
+  $('.page-number span.total').html(total_pages-1);
 
   // Size Page
   $('#pageSize').change(function() {
@@ -190,7 +199,10 @@ $(function() {
 
   // Page Number
   $('#currentPage').change(function() {
-    current_page_number = parseInt($(this).val());
+    let page = parseInt($(this).val());
+    if (invalidPage(page)) return;
+
+    current_page_number = page;
     show_pages_by_style(current_style);
   });
 
