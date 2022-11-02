@@ -33,4 +33,4 @@ This code was made based on my own experiences reading mangas, absorving the bes
 
 ### License
 
-This project is licensed under MIT - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under MIT - see the [LICENSE](LICENSE) file for details

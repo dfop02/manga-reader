@@ -226,6 +226,12 @@ $(function() {
     }
   });
 
+  $('.page img').click(function() {
+    if (page_styles) {
+      move_page('right');
+    }
+  });
+
   // Mobile touch
   if (isMobile) {
     $(this).on('touchstart', function(e) {
