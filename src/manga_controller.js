@@ -1,10 +1,10 @@
 // Default Settings
+const page_styles = ['one-page-style', 'double-page-style'];
+const vertical_styles = ['vertical-style', 'double-vertical-style'];
 let current_page_number = 0;
 let current_size = 60;
 let current_style = 'vertical-style';
-
-// User Settings
-let total_pages = 10;
+let total_pages = 0;
 let manga_name = 'Manga Reader Example';
 let filenames = 'example.jpg';
 let source = 'manga'
@@ -14,7 +14,9 @@ function range(size, startAt = 0) {
   return [...Array(size).keys()].map(i => i + startAt);
 }
 
-function collect_pages(total_pages = 0) {
+function collect_pages(total_pages = 0, pages_path = []) {
+  if (pages_path.length) return pages_path;
+
   return range(total_pages).map(page => `${source}/${page}.${filenames}`);
 }
 
@@ -22,10 +24,55 @@ function show_image(id = '', src = '', width = current_size) {
   $('.page').append(`<img id="${id}" width="${width}%" src="${src}"/>`);
 }
 
+function loadManga(manga_name, source = []) {
+  total_pages = source.length;
+  const pages = collect_pages(total_pages=total_pages, pages_path=source);
+
+  $('.page').empty();
+  for (let [index, page] of pages.entries()) {
+    show_image(id=index, src=page);
+  }
+
+  generate_carousel();
+
+  $('.manga-title').html(manga_name);
+  $('.page-number span.total').html(total_pages-1);
+  $('.manga-box, .carousel-pages').show();
+}
+
 function generate_carousel() {
+  // Clear and fill new pages
+  $('.carousel-pages').empty();
   for (let page in range(total_pages)) {
     $('.carousel-pages').append(`<span id="page${page}">${page}</span>`);
   }
+
+  // Remove all eventListener by cloning element
+  document.querySelectorAll(".carousel-pages").forEach((carousel) => {
+    const new_carousel = carousel.cloneNode(true);
+    carousel.parentNode.replaceChild(new_carousel, carousel);
+  });
+
+  // Move user to selected page
+  $('.carousel-pages span').click(function(e) {
+    e.preventDefault();
+    let number = $(this).html();
+    current_page_number = parseInt(number);
+    vertical_jump_to_page()
+  });
+
+  // Drag scroll to move between hidden pages
+  document.querySelectorAll(".carousel-pages").forEach((elem) => {
+    let isDrag = false;
+    
+    const dragStart = () => isDrag = true;
+    const dragEnd = () => isDrag = false;
+    const drag = (ev) => isDrag && ((elem.scrollLeft -= ev.movementX) || (elem.scrollLeft += ev.movementX));
+
+    elem.addEventListener("pointerdown", dragStart);
+    addEventListener("pointerup", dragEnd);
+    addEventListener("pointermove", drag);
+  });
 }
 
 function mark_page_as_read(page_numbers = [], next_page = true) {
@@ -56,14 +103,14 @@ function show_pages_by_style(style) {
   } else if (style == 'double-page-style') {
     $(`#${current_page_number}`).show();
     $(`#${current_page_number + 1}`).show();
-    pages.not(`#${current_page_number}`).not(`#${current_page_number + 1}`).hide()
+    pages.not(`#${current_page_number}`).not(`#${current_page_number + 1}`).hide();
   } else {
     pages.show();
   }
 }
 
 function vertical_jump_to_page() {
-  console.log('page number: ' + current_page_number)
+  console.log('page number: ' + current_page_number);
   $('html, body').animate({
     scrollTop: $(`#${current_page_number}`).offset().top
   }, 500);
@@ -81,8 +128,6 @@ function toggle_page_buttons(hide=true) {
 
 function switch_style(new_style) {
   const page = $('.page');
-  const page_styles = ['one-page-style', 'double-page-style'];
-  const vertical_styles = ['vertical-style', 'double-vertical-style'];
 
   if (current_style == new_style) return;
 
@@ -177,26 +222,22 @@ function invalidPage(page) {
   return false
 }
 
-$(function() {
-  const page_styles = ['one-page-style', 'double-page-style'];
-  const vertical_styles = ['vertical-style', 'double-vertical-style'];
-  let isMobile = ( window.innerWidth <= 1000 );
+function backChapterControl() {
+  // Back to Chapters
+  $('.back-to-chapters').click(function() {
+    $('.manga-box, .carousel-pages').hide();
+    renderFolder();
+  });
+}
 
-  // Booting
-  const pages = collect_pages(total_pages=total_pages);
-
-  for (let [index, page] of pages.entries()) {
-    show_image(id=index, src=page);
-  }
-
-  $('.manga-title').html(manga_name);
-  $('.page-number span.total').html(total_pages-1);
-
+function sizePageControl() {
   // Size Page
   $('#pageSize').change(function() {
     update_page_size($(this).val());
   });
+}
 
+function pageNumberControl() {
   // Page Number
   $('#currentPage').change(function() {
     let page = parseInt($(this).val());
@@ -205,6 +246,10 @@ $(function() {
     current_page_number = page;
     show_pages_by_style(current_style);
   });
+}
+
+function changePageControl() {
+  let isMobile = ( window.innerWidth <= 1000 );
 
   // Previous and Next Buttons
   $('.previous-page-btn').click(function() {
@@ -260,7 +305,9 @@ $(function() {
       });
     });
   }
+}
 
+function fullscreenControl() {
   // Fullscreen
   let isFullscreen = false;
 
@@ -274,7 +321,9 @@ $(function() {
     }
     $(this).find('span').toggle();
   });
+}
 
+function switchModeControl() {
   // Switch Mode
   let isDarkMode = false;
 
@@ -292,50 +341,59 @@ $(function() {
     $(this).find('span').toggle();
     switch_mode(isDarkMode);
   })
+}
 
-  // Scroll Button and Header
-  let btn = $('#scroll-top');
+function scrollControl() {
+// Scroll Button and Header
+let btn = $('#scroll-top');
 
-  $(window).scroll(function() {
-    let scrollTop = $(this).scrollTop();
-    let controls = $('.controls');
-    let carousel = $('.carousel-pages');
+$(window).scroll(function() {
+  let scrollTop = $(this).scrollTop();
+  let controls = $('.controls');
+  let carousel = $('.carousel-pages');
 
-    if (vertical_styles.includes(current_style)) {
-      if (scrollTop > 300) {
-        btn.fadeIn(1000);
-        controls.addClass('fixed');
-        carousel.addClass('active');
+  if (vertical_styles.includes(current_style)) {
+    if (scrollTop > 300) {
+      btn.fadeIn(1000);
+      controls.addClass('fixed');
+      carousel.addClass('active');
 
-        if (!$('html,body').is(':animated') && scrollTop > $(`#${current_page_number}`).offset().top) {
-          mark_page_as_read([current_page_number]);
-        }
-      } else {
-        btn.fadeOut(1000);
-        controls.removeClass('fixed');
-        carousel.removeClass('active');
+      if (!$('html,body').is(':animated') && scrollTop > $(`#${current_page_number}`).offset().top) {
+        mark_page_as_read([current_page_number]);
       }
     } else {
-      if (controls.hasClass('fixed')) {
-        btn.fadeOut(1000);
-        controls.removeClass('fixed');
-        carousel.removeClass('active');
-      }
+      btn.fadeOut(1000);
+      controls.removeClass('fixed');
+      carousel.removeClass('active');
     }
-  });
+  } else {
+    if (controls.hasClass('fixed')) {
+      btn.fadeOut(1000);
+      controls.removeClass('fixed');
+      carousel.removeClass('active');
+    }
+  }
+});
 
-  btn.click(function(e) {
-    e.preventDefault();
-    $('html, body').animate({scrollTop:0}, 300);
-  });
+btn.click(function(e) {
+  e.preventDefault();
+  $('html, body').animate({scrollTop:0}, 300);
+});
+}
 
-  // Carousel
-  generate_carousel();
+function prepareControls() {
+  backChapterControl();
+  sizePageControl();
+  pageNumberControl();
+  changePageControl();
+  fullscreenControl();
+  switchModeControl();
+  scrollControl();
+}
 
-  $('.carousel-pages span').click(function(e) {
-    e.preventDefault();
-    let number = $(this).html();
-    current_page_number = parseInt(number);
-    vertical_jump_to_page()
-  });
+$(function() {
+  // Booting
+  $('.manga-box, .carousel-pages').hide();
+
+  prepareControls();
 });

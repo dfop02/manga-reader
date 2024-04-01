@@ -2,6 +2,84 @@ html, body {
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0;
+}
+
+.input-folders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.input-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  flex-direction: column;
+  font-family: arial;
+  font-size: 16px;
+  width: 350px;
+  height: 200px;
+  margin: auto;
+  color: white;
+  background-color: #04AA6D;
+  border-radius: 20px;
+}
+
+.input-box label {
+  margin-bottom: 10px;
+}
+
+#select-folder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: auto;
+  height: 40px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  background-color: #04AA6D;
+  text-decoration: none;
+  margin: 16px;
+  padding: 0 20px;
+}
+
+#select-folder a {
+  text-align: center;
+  color: white;
+  text-decoration: none;
+}
+
+#folders {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  vertical-align: middle;
+  flex-wrap: wrap-reverse;
+  height: 100%;
+}
+
+#folders a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 calc(15% - 10px);
+  width: 200px;
+  height: 70px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  background-color: #04AA6D;
+  text-decoration: none;
+  margin: 10px;
+  padding: 0 10px;
 }
 
 .manga-box {
@@ -45,6 +123,11 @@ html.dark-mode {
 
 .manga-box.dark-mode h1.manga-title {
   color: white;
+  -webkit-transition: color 0.3s ease-out;
+  -moz-transition: color 0.3s ease-out;
+  -o-transition: color 0.3s ease-out;
+  -ms-transition: color 0.3s ease-out;
+  transition: color 0.3s ease-out;
 }
 
 /* Styles */
@@ -118,6 +201,22 @@ html.dark-mode {
   transition: opacity 0.5s ease-out;
 }
 
+.back-to-chapters {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  vertical-align: middle;
+  justify-content: center;
+  background-color: #04AA6D;
+  height: 40px;
+  font-size: 16px;
+  margin-right: 16px;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+  cursor: pointer;
+}
+
 /* Read Style */
 
 .style-btn {
@@ -185,7 +284,7 @@ html.dark-mode {
 .page-size {
   background-color: #04AA6D;
   position: relative;
-  width: 190px;
+  width: 200px;
   font-size: 16px;
   margin-left: 16px;
   border-radius: 10px;
@@ -193,8 +292,8 @@ html.dark-mode {
 
 #pageSize {
   text-align: center;
-  width: 40%;
-  height: 40px;
+  width: 32%;
+  height: 34px;
   font-size: 16px;
   border-radius: 10px 0 0 10px;
   padding-right: 10px;
@@ -209,8 +308,8 @@ html.dark-mode {
 
 .page-size span {
   position: absolute;
-  right: 66%;
-  top: 26%;
+  right: 68%;
+  top: 28%;
   font-size: 16px;
 }
 
@@ -384,7 +483,7 @@ html.dark-mode {
 
 .carousel-pages {
   display: flex;
-  overflow-x: auto;
+  overflow-x: hidden;
   position: fixed;
   width: 90%;
   height: 40px;

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Manga Reader</title>
@@ -6,12 +7,25 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" type="text/css" href="src/main.css">
         <!-- JS -->
-        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-        <script src="src/main.js" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="src/manga_controller.js" type="text/javascript"></script>
+        <script src="src/folder_controller.js" type="text/javascript"></script>
     </head>
     <body>
+        <div class="input-folders">
+            <div class="input-box">
+                <label for="folder">Select folder</label>
+                <input type="file" id="folder" name="folder" accept="image/*" webkitdirectory multiple/>
+            </div>
+        </div>
+        <div id="select-folder"></div>
+        <div id="folders"></div>
+
         <div class="manga-box">
             <div class="controls">
+                <div class="back-to-chapters" title="Back to Chapter Select">
+                    <span class="material-icons">undo</span>
+                </div>
                 <div class="read-style" title="Read Style">
                     <button class="style-btn">
                         <span class="material-icons">menu_book</span>
@@ -40,12 +54,12 @@
                     /
                     <span class="total">0</span>
                 </div>
-                <div class="fullscreen">
+                <div class="fullscreen" title="Fullscreen">
                     <span class="material-icons join">fullscreen</span>
                     <span class="material-icons exit">fullscreen_exit</span>
                     <p class="fullscreen-title">Fullscreen</p>
                 </div>
-                <div class="switch-mode">
+                <div class="switch-mode" title="Switch between light and dark modes">
                     <span class="material-icons light-mode">light_mode</span>
                     <span class="material-icons dark-mode">dark_mode</span>
                     <p class="name-mode">Dark Mode</p>
